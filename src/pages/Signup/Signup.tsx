@@ -1,17 +1,18 @@
 import { Box, Container, Typography, Button as MaterialButton } from "@mui/material";
 import { Button, InputField } from "@/components";
 import { Controller, useForm } from "react-hook-form";
-import { LoginFormType, loginSchema } from "./Login.config";
+import { SignUpFormType, signUpSchema } from "./Signup.config"; 
 import { zodResolver } from "@hookform/resolvers/zod";
-import LoginBG from "@/assets/images/login_bg.png";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/components/constants/routes";
+
+import LoginBG from "@/assets/images/login_bg.png";
 
 import { useDispatch } from "react-redux";
 import { setUser } from '../../store/userStore';
 import { rem } from "@/utils/apptheme/themeUtils";
 
-const Login = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,21 +20,18 @@ const Login = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<LoginFormType>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "" },
+  } = useForm<SignUpFormType>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: { firstName: "", lastName: "", email: "", password: "" },
     mode: "all",
   });
 
-  const onSubmit = (data: LoginFormType) => {
-    navigate(ROUTES.HOME);
-    dispatch(setUser(data.email));
+  const onSubmit = (data: SignUpFormType) => {
+    // Handle the form submission logic
+    dispatch(setUser(data.email));  // Save the user's email or other details to the store
+    navigate(ROUTES.HOME);  // Navigate to home after successful signup
     console.log("Form Submitted", data);
   };
-
-  const navigateToSignup = ()=>{
-    navigate(ROUTES.SIGN_UP);
-  }
 
   return (
     <Box
@@ -41,7 +39,7 @@ const Login = () => {
         flex: 1,
         display: "flex",
         height: "100vh",
-        flexDirection:{xs:"column",md:"row"}
+        flexDirection: { xs: "column", md: "row" },
       }}
     >
       <Box
@@ -62,12 +60,38 @@ const Login = () => {
             }}
           >
             <Typography variant="h4" align="center" gutterBottom>
-              Vaccination Tracker
+              Create an Account
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Controller
+                name="firstName"
                 control={control}
+                render={({ field }) => (
+                  <InputField
+                    label="First Name"
+                    type="text"
+                    error={!!errors.firstName?.message}
+                    helperText={errors.firstName?.message}
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                name="lastName"
+                control={control}
+                render={({ field }) => (
+                  <InputField
+                    label="Last Name"
+                    type="text"
+                    error={!!errors.lastName?.message}
+                    helperText={errors.lastName?.message}
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
                 name="email"
+                control={control}
                 render={({ field }) => (
                   <InputField
                     label="Email"
@@ -91,9 +115,11 @@ const Login = () => {
                   />
                 )}
               />
-              <Box sx={{display:'flex', flexDirection:'column',gap:rem(16)}}>
-              <Button title="Login" type="submit" />
-              <MaterialButton fullWidth variant="text" onClick={navigateToSignup}> Sign up </MaterialButton>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: rem(16) }}>
+                <Button title="Sign Up" type="submit" />
+                <MaterialButton fullWidth variant="text" onClick={() => navigate(ROUTES.LOGIN)}>
+                  Already have an account? Login
+                </MaterialButton>
               </Box>
             </form>
           </Box>
@@ -112,4 +138,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

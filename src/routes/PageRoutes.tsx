@@ -6,11 +6,13 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
 const LoginPage = lazy(() => import("@/pages/Login"));
+const SignupPage = lazy(() => import("@/pages/Signup"));
 const HomePage = lazy(() => import("@/pages/Home"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const AddKid = lazy(() => import("@/pages/AddKid"));
 const AddVaccination = lazy(() => import("@/pages/AddVaccination"));
 const ProfilePage = lazy(() => import("@/pages/Profile"));
+const NotFound = lazy(() => import("@/pages/404"));
 
 const PageRoutes = () => {
   return (
@@ -23,6 +25,7 @@ const PageRoutes = () => {
     >
       <Routes>
         <Route index element={<LoginPage />} />
+        <Route path={ROUTES.SIGN_UP} element={<SignupPage />} />
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route element={<AuthLayout />}>
           <Route path={ROUTES.HOME} element={<HomePage />} />
@@ -33,6 +36,7 @@ const PageRoutes = () => {
           <Route path={ROUTES.ADD_VACCINATION} element={<AddVaccination />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

@@ -8,15 +8,22 @@ import {
   Typography,
 } from "@mui/material";
 import { menuItems } from "./Sidebar.config";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { clearStore  } from "@/store/userStore";
 
 const Sidebar = () => {
 
   const user = useSelector((state:RootState)=>state.user.name);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    dispatch(clearStore()); 
+    navigate("/login"); 
+  };
   return (
     <Box
       sx={{
@@ -86,6 +93,7 @@ const Sidebar = () => {
           >
             <Link
               component={RouterLink}
+              onClick={item.key === "logout" ? handleLogout : undefined} 
               to={item?.route ?? ""}
               aria-label={item.name}
               sx={{
