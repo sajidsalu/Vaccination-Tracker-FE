@@ -18,6 +18,7 @@ const HomePage = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              flexDirection: {xs:'column',md:'row'}
             }}
           >
             <Typography

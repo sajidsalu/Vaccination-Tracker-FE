@@ -8,13 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { menuItems } from "./Sidebar.config";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { matchPath, Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { clearStore  } from "@/store/userStore";
 
 const Sidebar = () => {
+  const {pathname} = useLocation();
 
   const user = useSelector((state:RootState)=>state.user.name);
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const Sidebar = () => {
     dispatch(clearStore()); 
     navigate("/login"); 
   };
+
   return (
     <Box
       sx={{
@@ -65,7 +67,9 @@ const Sidebar = () => {
 
       {/* Menu Items */}
       <List>
-        {menuItems.map((item, index) => (
+        {menuItems.map((item, index) => {
+          const isActive = !!matchPath({ path: item.route }, pathname);
+        return(
           <ListItem
             disablePadding
             key={index}
@@ -73,6 +77,8 @@ const Sidebar = () => {
               transition: "background ease 0.2s",
               position: "relative",
               cursor: "pointer",
+              backgroundColor: `${isActive ? "#2A2A47":""}`,
+              borderLeft: `${isActive ? `4px solid #FFD700` : ""}`,
               "&:before": {
                 content: "''",
                 width: rem(3),
@@ -117,7 +123,7 @@ const Sidebar = () => {
               <ListItemText primary={item.name} />
             </Link>
           </ListItem>
-        ))}
+        )})}
       </List>
     </Box>
   );
