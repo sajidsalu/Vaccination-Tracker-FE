@@ -20,7 +20,7 @@ import { rem } from "@/utils/apptheme/themeUtils";
 import { useNavigate, useParams } from "react-router-dom";
 import { dummyUser } from "./UserDetails.config";
 import { CardLayout, PageLayout } from "@/components/Layout";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import { ROUTES } from "@/components/constants/routes";
 
 const UserDetailsPage = () => {
@@ -30,7 +30,10 @@ const UserDetailsPage = () => {
   const user = dummyUser;
   const [tabIndex, setTabIndex] = useState(0);
 
-  const handleTabChange = (event: React.ChangeEvent<unknown>, newIndex: number) => {
+  const handleTabChange = (
+    event: React.ChangeEvent<unknown>,
+    newIndex: number
+  ) => {
     setTabIndex(newIndex);
   };
 
@@ -38,64 +41,69 @@ const UserDetailsPage = () => {
     navigate(-1);
   };
 
-  const navigateToEditDetails =()=>{
+  const navigateToEditDetails = () => {
     navigate(ROUTES.EDIT_KID);
-  }
+  };
 
-  const navigateToAddVaccination = ()=>{
-    navigate(ROUTES.ADD_VACCINATION.replace(":id", "1"))
-  }
+  const navigateToAddVaccination = () => {
+    navigate(ROUTES.ADD_VACCINATION.replace(":id", "1"));
+  };
   return (
     <PageLayout breadcrumbs={[{ label: "Users" }, { label: "User Details" }]}>
-      <CardLayout title="User Details" onClickBackButton={navigateBack} 
-      headerAction={
-         <Button
-         variant="contained"
-         color="primary"
-         onClick={navigateToAddVaccination }
-       >
-         Add Vaccination
-       </Button>
-      }>
+      <CardLayout
+        title="User Details"
+        onClickBackButton={navigateBack}
+        headerAction={
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={navigateToAddVaccination}
+          >
+            Add Vaccination
+          </Button>
+        }
+      >
         <Container maxWidth="md" sx={{ marginTop: rem(24) }}>
-          <Box sx={{
-            display:"flex",
-            justifyContent:"space-between",
-            alignContent:"center",
-            alignItems:"flex-start",
-          }}>
           <Box
             sx={{
               display: "flex",
-              alignItems: "center",
-              gap: rem(16),
-              marginBottom: rem(24),
+              justifyContent: "space-between",
+              alignContent: "center",
+              alignItems: "flex-start",
             }}
           >
-            <Avatar
-              src={user.profileImage}
-              alt={user.name}
-              sx={{ width: rem(80), height: rem(80) }}
-            />
-            <Box>
-              <Typography variant="h4">{user.name}</Typography>
-              <Typography variant="body1">Gender: {user.gender}</Typography>
-              <Typography variant="body1">DOB: {user.dob}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: rem(16),
+                marginBottom: rem(24),
+              }}
+            >
+              <Avatar
+                src={user.profileImage}
+                alt={user.name}
+                sx={{ width: rem(80), height: rem(80) }}
+              />
+              <Box>
+                <Typography variant="h4">{user.name}</Typography>
+                <Typography variant="body1">Gender: {user.gender}</Typography>
+                <Typography variant="body1">DOB: {user.dob}</Typography>
+              </Box>
             </Box>
+            <IconButton
+              id="back-navigation-button"
+              aria-label="back"
+              size="medium"
+              color="default"
+              sx={{
+                ".MuiSvgIcon-root": { fontSize: { xs: rem(26), lg: rem(28) } },
+              }}
+              onClick={navigateToEditDetails}
+            >
+              <EditIcon />
+            </IconButton>
           </Box>
-          <IconButton
-                id="back-navigation-button"
-                aria-label="back"
-                size="medium"
-                color="default"
-                sx={{
-                  ".MuiSvgIcon-root": { fontSize: { xs: rem(26), lg: rem(28) } },
-                }}
-                onClick={navigateToEditDetails}
-              >
-                <EditIcon />
-              </IconButton>
-            </Box>
           {/* Tabs Section */}
           <Tabs value={tabIndex} onChange={handleTabChange} variant="fullWidth">
             <Tab label="Vaccinations Taken" />
@@ -105,7 +113,7 @@ const UserDetailsPage = () => {
           {/* Tab Content */}
           {tabIndex === 0 && (
             <TableContainer component={Paper} sx={{ marginTop: rem(16) }}>
-              <Table>
+              <Table stickyHeader sx={{ minWidth: { xs: rem(650), md: rem(650) } }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Vaccination Name</TableCell>
@@ -130,7 +138,7 @@ const UserDetailsPage = () => {
 
           {tabIndex === 1 && (
             <TableContainer component={Paper} sx={{ marginTop: rem(16) }}>
-              <Table>
+              <Table stickyHeader sx={{ minWidth: { xs: rem(550), md: rem(650) } }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>Vaccination Name</TableCell>

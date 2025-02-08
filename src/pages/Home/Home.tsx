@@ -2,8 +2,11 @@ import { Container, Typography, Box, Button } from "@mui/material";
 import UserCard from "./UserCard";
 import { rem } from "@/utils/apptheme/themeUtils";
 import { CardLayout, PageLayout } from "@/components/Layout";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/components/constants/routes";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const breadcrumbs = [{ label: "Home" }];
   return (
     <PageLayout breadcrumbs={breadcrumbs}>
@@ -35,6 +38,7 @@ const HomePage = () => {
               variant="contained"
               color="primary"
               sx={{ marginBottom: rem(20) }}
+              onClick={() => navigate(ROUTES.ADD_KID)}
             >
               + Add Kid
             </Button>

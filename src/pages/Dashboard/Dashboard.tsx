@@ -1,3 +1,4 @@
+import { ROUTES } from "@/components/constants/routes";
 import { CardLayout, PageLayout } from "@/components/Layout";
 import UserCard from "@/components/UserCard/Usercard";
 import { kids } from "@/constants/user.constants";
@@ -12,7 +13,7 @@ const Dashboard = () => {
     <PageLayout breadcrumbs={breadcrumbs}>
       <CardLayout>
         <Container maxWidth="md">
-          <Box sx={{ display:"flex", flex: 1, justifyContent:"space-between",alignItems:"center"}}>
+          <Box sx={{ display:"flex", flex: 1, justifyContent:"space-between",alignItems:"center", flexDirection:{xs:'column',md:'row'}}}>
             <Typography variant="h4" gutterBottom>
               Vaccination Tracker
             </Typography>
@@ -20,7 +21,7 @@ const Dashboard = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => navigate("/add-kid")}
+              onClick={() => navigate(ROUTES.ADD_KID)}
             >
               Add Kid
             </Button>

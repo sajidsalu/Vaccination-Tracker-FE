@@ -119,7 +119,7 @@ const AddVaccination = () => {
           </Grid>
         </Grid>
 
-        <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
+        <Button type="submit" variant="contained" color="primary" sx={{ mt: 4 }} fullWidth>
           Save
         </Button>
       </form>

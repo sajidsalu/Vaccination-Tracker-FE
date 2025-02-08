@@ -3,7 +3,6 @@ import {
   Box,
   Drawer,
   IconButton,
-  Link,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -43,9 +42,7 @@ const AuthLayout = () => {
         }}
       >
         <Box>
-          <Link href="#" sx={{ display: "flex" }}>
-            <Typography sx={{ color: "white", textDecoration:"none" }}>Vaccine Tracker</Typography>
-          </Link>
+            <Typography sx={{ color: "white" }}>Vaccination Tracker</Typography>
         </Box>
         <Box
           sx={{
