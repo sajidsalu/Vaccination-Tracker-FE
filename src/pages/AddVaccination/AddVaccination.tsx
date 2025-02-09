@@ -23,7 +23,6 @@ const AddVaccination = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Vaccination Data Submitted:", formData);
     navigate("/");
   };
 

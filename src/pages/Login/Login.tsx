@@ -8,12 +8,28 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/components/constants/routes";
 
 import { useDispatch } from "react-redux";
-import { setUser } from '../../store/userStore';
+import { setUser, setLoginResponse } from '../../store/userStore';
 import { rem } from "@/utils/apptheme/themeUtils";
+import useLogin from "@/services/auth/useLogin";
+import { LoginAPIResponse, LoginPayload } from "@/services/auth/auth.types";
+import { FailedAPIStatus } from "@/types/api.types";
+import { useToast } from "@/hooks";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { showSuccessToast, showErrorToast } = useToast();
+  
+  const onLoginSuccess =(data:LoginAPIResponse)=>{
+    showSuccessToast("Login successful!");
+    dispatch(setLoginResponse(data?.result));
+    navigate(ROUTES.HOME);
+  }
+
+  const onLoginFailed =(error:FailedAPIStatus)=> {
+    showErrorToast(error?.result?.message)
+  }
+  const {mutateAsync: loginUser} = useLogin({onSuccess: onLoginSuccess, onError: onLoginFailed});
 
   const {
     handleSubmit,
@@ -25,10 +41,13 @@ const Login = () => {
     mode: "all",
   });
 
-  const onSubmit = (data: LoginFormType) => {
-    navigate(ROUTES.HOME);
+  const onSubmit = async(data: LoginFormType) => {
     dispatch(setUser(data.email));
-    console.log("Form Submitted", data);
+    const payload: LoginPayload ={
+      email: data.email,
+      password: data.password,
+    };
+    await loginUser(payload);
   };
 
   const navigateToSignup = ()=>{

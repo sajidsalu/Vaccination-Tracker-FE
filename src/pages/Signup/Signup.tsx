@@ -30,7 +30,6 @@ const SignUp = () => {
     // Handle the form submission logic
     dispatch(setUser(data.email));  // Save the user's email or other details to the store
     navigate(ROUTES.HOME);  // Navigate to home after successful signup
-    console.log("Form Submitted", data);
   };
 
   return (
