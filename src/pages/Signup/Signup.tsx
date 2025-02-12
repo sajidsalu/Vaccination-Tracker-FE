@@ -5,16 +5,33 @@ import { SignUpFormType, signUpSchema } from "./Signup.config";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/components/constants/routes";
-
 import LoginBG from "@/assets/images/login_bg.png";
-
 import { useDispatch } from "react-redux";
-import { setUser } from '../../store/userStore';
+import { setLoginResponse, setUser } from '@/store/userStore';
 import { rem } from "@/utils/apptheme/themeUtils";
+import useSignup from "@/services/auth/useSignup";
+import { LoginAPIResponse, SignUpPayload } from "@/services/auth/auth.types";
+import { FailedAPIStatus } from "@/types/api.types";
+import { useToast } from "@/hooks";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { showSuccessToast, showErrorToast } = useToast();
+  
+  const onSignupSuccess = (data: LoginAPIResponse)=>{
+    navigate(ROUTES.HOME);
+    if(data?.result){
+      dispatch(setLoginResponse(data.result))
+    }
+    showSuccessToast("User is registered successfully.")
+  }
+
+  const onSignupError =(error:FailedAPIStatus)=>{
+    showErrorToast(error.result.message);
+  }
+  const {mutateAsync: signupUser} = useSignup({onSuccess: onSignupSuccess, onError: onSignupError});
 
   const {
     handleSubmit,
@@ -26,10 +43,14 @@ const SignUp = () => {
     mode: "all",
   });
 
-  const onSubmit = (data: SignUpFormType) => {
-    // Handle the form submission logic
-    dispatch(setUser(data.email));  // Save the user's email or other details to the store
-    navigate(ROUTES.HOME);  // Navigate to home after successful signup
+  const onSubmit = async(data: SignUpFormType) => {
+    dispatch(setUser(data.email)); 
+    const payload: SignUpPayload ={
+      name: `${data?.firstName} ${data?.lastName}`,
+      email: data.email,
+      password: data.password,
+    }
+    await signupUser(payload);
   };
 
   return (

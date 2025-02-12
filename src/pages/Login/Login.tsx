@@ -22,6 +22,7 @@ const Login = () => {
   
   const onLoginSuccess =(data:LoginAPIResponse)=>{
     showSuccessToast("Login successful!");
+    console.log('login response is',data?.result)
     dispatch(setLoginResponse(data?.result));
     navigate(ROUTES.HOME);
   }

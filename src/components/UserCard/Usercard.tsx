@@ -9,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export type Kid = {
-  id: number;
+  id: string;
   name: string;
   age: string;
   upcomingVaccination: string;

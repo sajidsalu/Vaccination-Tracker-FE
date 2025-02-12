@@ -10,7 +10,7 @@ type QueryOptions = Omit<
 
 export type MutationOptions<T, U> = {
   mutationFn: (payload: U) => Promise<APIResponse<T>>;
-  resource: string;
+  resource?: string;
   handler?: APIHandlerType<T>;
   successCodes?: number[];
   defaultErrorMsg?: string;
