@@ -7,6 +7,7 @@ import { ROUTES } from "@/components/constants/routes";
 
 const HomePage = () => {
   const navigate = useNavigate();
+
   const breadcrumbs = [{ label: "Home" }];
   return (
     <PageLayout breadcrumbs={breadcrumbs}>

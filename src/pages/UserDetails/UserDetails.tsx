@@ -26,7 +26,6 @@ import { ROUTES } from "@/components/constants/routes";
 const UserDetailsPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log("user id is", id);
   const user = dummyUser;
   const [tabIndex, setTabIndex] = useState(0);
 

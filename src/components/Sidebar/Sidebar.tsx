@@ -11,13 +11,12 @@ import { menuItems } from "./Sidebar.config";
 import { matchPath, Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { clearStore  } from "@/store/userStore";
+import { clearStore, getUsername  } from "@/store/userStore";
 
 const Sidebar = () => {
   const {pathname} = useLocation();
 
-  const user = useSelector((state:RootState)=>state.user.name);
+  const user = useSelector(getUsername);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

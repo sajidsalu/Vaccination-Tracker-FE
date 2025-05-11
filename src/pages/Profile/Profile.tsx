@@ -39,7 +39,6 @@ const ProfilePage = () => {
 
   const handleDeleteAccount = () => {
     if (window.confirm("Are you sure you want to delete your account?")) {
-      console.log("Account deleted");
       navigate(ROUTES.LOGIN);
     }
   };

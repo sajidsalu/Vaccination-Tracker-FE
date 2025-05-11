@@ -13,7 +13,6 @@ const genders = ["Male", "Female", "Other"];
 
 const AddEditKid = () => {
   const { pathname } = useLocation();
-  console.log('pathname',pathname);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -29,7 +28,6 @@ const AddEditKid = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
     navigate("/");
   };
 
